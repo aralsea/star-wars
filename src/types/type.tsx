@@ -7,7 +7,7 @@ type Repo = {
 
 type Person = {
   name: string;
-  birthYear: string;
+  birth_year: string;
   height: number;
   mass: number;
   gender: string;

@@ -10,7 +10,7 @@ export default function Person({
       <li>height: {person.height} cm</li>
       <li>weight: {person.mass} kg</li>
       <li>gender: {person.gender}</li>
-      <li>birth year: {person.birthYear}</li>
+      <li>birth year: {person.birth_year}</li>
     </ul>
   );
 }
