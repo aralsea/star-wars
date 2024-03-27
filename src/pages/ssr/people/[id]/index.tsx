@@ -20,7 +20,9 @@ export const getServerSideProps = (async (context) => {
   const id = await Promise.resolve(context.params?.id);
 
   const target = `https://swapi.dev/api/people/${id}/`;
-  const res = await fetch(target);
-  const person: Person = await res.json();
+
+  const person: Person = await fetch(target).then((response) =>
+    response.json()
+  );
   return { props: { person } };
 }) satisfies GetServerSideProps<{ person: Person }>;

@@ -3,16 +3,19 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
+import { useMemo } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function People({
   people,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const listItems = people.map((person) => (
-    <li key={person.url}>
-      <Link href={"/ssr/" + url2id(person.url)}>{person.name}</Link>
-    </li>
-  ));
+  const listItems = useMemo(() => {
+    return people.map((person) => (
+      <li key={person.url}>
+        <Link href={"/ssr/" + url2id(person.url)}>{person.name}</Link>
+      </li>
+    ));
+  }, [people]);
 
   return (
     <>
