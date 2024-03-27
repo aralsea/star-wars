@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -47,13 +46,24 @@ function url2id(url: string) {
 
 //get the array of all the people
 export const getServerSideProps = (async () => {
+  const targets = Array.from(
+    { length: 9 },
+    (_, i) => `https://swapi.dev/api/people/?page=${i + 1}`
+  );
+
+  console.log(targets);
   let people: Person[] = [];
-  let next = "https://swapi.dev/api/people";
-  while (next) {
-    const res = await fetch(next);
-    const repo = await res.json();
-    next = repo.next;
-    people = people.concat(repo.results);
+
+  const peopleArray: Person[][] = await Promise.all(
+    targets.map((url) => {
+      return fetch(url).then((response) => response.json());
+    })
+  ).then((repos) => {
+    return repos.map((repo) => repo.results);
+  });
+
+  for (const tmpPeople of peopleArray) {
+    people = people.concat(tmpPeople);
   }
 
   return { props: { people } };
