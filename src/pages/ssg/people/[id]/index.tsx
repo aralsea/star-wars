@@ -20,8 +20,8 @@ export default function Person({
 }
 
 //get the person
-export const getStaticProps = (async (context) => {
-  const target = `https://swapi.dev/api/people/${context.params?.id}/`;
+export const getStaticProps = (async ({ params }) => {
+  const target = `https://swapi.dev/api/people/${params?.id}/`;
   const person: Person = await fetch(target).then((response) =>
     response.json()
   );
