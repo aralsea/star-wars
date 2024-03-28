@@ -24,7 +24,7 @@ export default function People() {
   const listItems = useMemo(() => {
     return people.map((person) => (
       <li key={person.url}>
-        <Link href={"/ssg/people/" + url2id(person.url)}>{person.name}</Link>
+        <Link href={"/csr/people/" + url2id(person.url)}>{person.name}</Link>
       </li>
     ));
   }, [people]);
