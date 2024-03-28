@@ -1,19 +1,24 @@
 import Head from "next/head";
+import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import type {
+  InferGetStaticPropsType,
+  GetStaticProps,
+  GetStaticPaths,
+} from "next";
 import Link from "next/link";
 import { useMemo } from "react";
-import getPeople, { url2id } from "@/utils/util";
+import getPeople, { url2id } from "../../../utils/util";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function People({
   people,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const listItems = useMemo(() => {
     return people.map((person) => (
       <li key={person.url}>
-        <Link href={"/ssr/people/" + url2id(person.url)}>{person.name}</Link>
+        <Link href={"/ssg/people/" + url2id(person.url)}>{person.name}</Link>
       </li>
     ));
   }, [people]);
@@ -33,8 +38,9 @@ export default function People({
   );
 }
 
-//get the array of all the people
-export const getServerSideProps = (async () => {
+export const getStaticProps = (async () => {
   const people = await getPeople();
   return { props: { people } };
-}) satisfies GetServerSideProps<{ people: Person[] }>;
+}) satisfies GetStaticProps<{
+  people: Person[];
+}>;

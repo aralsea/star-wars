@@ -17,9 +17,7 @@ export default function Person({
 
 //get the person
 export const getServerSideProps = (async (context) => {
-  const id = await Promise.resolve(context.params?.id);
-
-  const target = `https://swapi.dev/api/people/${id}/`;
+  const target = `https://swapi.dev/api/people/${context.params?.id}/`;
 
   const person: Person = await fetch(target).then((response) =>
     response.json()
